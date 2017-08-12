@@ -21,8 +21,6 @@ apply plugin: 'com.getkeepsafe.dexcount'
 //Code Coverage
 apply plugin: 'jacoco-android'
 
-
-
 android {
     compileSdkVersion 26
     buildToolsVersion "25.0.2"
@@ -70,7 +68,7 @@ dependencyUpdates.resolutionStrategy = {
 
 sonarqube {
     properties {
-        property "sonar.jacoco.reportPath", "build/jacoco/testDebugUnitTest.exec"
+        property "sonar.jacoco.reportPaths", "build/jacoco/testDebugUnitTest.exec"
         property "sonar.junit.reportsPath", "build/test-results/debug"
     }
 }

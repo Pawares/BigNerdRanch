@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,9 +51,7 @@ public class FlickrFetchr {
     }
 
     private String getUrlString(String urlSpec) throws IOException {
-        return new String(getUrlBytes(urlSpec), "UTF-8");
-
-       // return new String(getUrlBytes(urlSpec));
+        return new String(getUrlBytes(urlSpec), StandardCharsets.UTF_8);
     }
 
     public List<GalleryItem> fetchItems() {
