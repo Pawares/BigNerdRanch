@@ -22,6 +22,7 @@ import java.util.List;
 public class FlickrFetchr {
     private static final String TAG = FlickrFetchr.class.getSimpleName();
     private static final String API_KEY = "774115be7bf59190926cf4319fd6a10a";
+    private static final String URL_S = "url_s";
 
     private byte[] getUrlBytes(String urlSpec) throws IOException {
         URL url = new URL(urlSpec);
@@ -49,7 +50,9 @@ public class FlickrFetchr {
     }
 
     private String getUrlString(String urlSpec) throws IOException {
-        return new String(getUrlBytes(urlSpec));
+        return new String(getUrlBytes(urlSpec), "UTF-8");
+
+       // return new String(getUrlBytes(urlSpec));
     }
 
     public List<GalleryItem> fetchItems() {
@@ -63,7 +66,7 @@ public class FlickrFetchr {
                     .appendQueryParameter("api_key", API_KEY)
                     .appendQueryParameter("format", "json")
                     .appendQueryParameter("nojsoncallback", "1")
-                    .appendQueryParameter("extras", "url_s")
+                    .appendQueryParameter("extras", URL_S)
                     .build().toString();
 
             String jsonString = getUrlString(url);
@@ -91,10 +94,10 @@ public class FlickrFetchr {
             item.setId(photoJsonObject.getString("id"));
             item.setCaption(photoJsonObject.getString("title"));
 
-            if(!photoJsonObject.has("url_s")){
+            if(!photoJsonObject.has(URL_S)){
                 continue;
             }
-            item.setUrl(photoJsonObject.getString("url_s"));
+            item.setUrl(photoJsonObject.getString(URL_S));
             items.add(item);
         }
 

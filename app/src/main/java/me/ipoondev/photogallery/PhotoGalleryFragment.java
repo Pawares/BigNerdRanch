@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -83,7 +84,10 @@ public class PhotoGalleryFragment extends Fragment {
 
         public PhotoHolder(View itemView) {
             super(itemView);
-            mTitleTextView = (TextView) itemView;
+            if(itemView instanceof TextView){
+                mTitleTextView = (TextView) itemView;
+            }
+            Log.e(TAG, "itemView is not TextView");
         }
 
         public void bindGalleryItem(GalleryItem item){
