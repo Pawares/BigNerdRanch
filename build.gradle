@@ -6,10 +6,13 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.3'
-
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
+}
+
+plugins {
+    id "org.sonarqube" version "2.2.1"
 }
 
 allprojects {
@@ -20,4 +23,35 @@ allprojects {
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+ext {
+    jacocoVersion = '0.7.8'
+}
+
+sonarqube {
+    properties {
+
+        def jenkinsJobName = System.getenv('JOB_NAME')
+        def jenkinsJobBuild = System.getenv('BUILD_NUMBER')
+
+        def projectVersion = "nonJenkinsBuild_1.0"
+        def projectName = "PhotoGallery"
+        def projectKey = "photogallery:photogallery"
+        def branch = "master"
+
+        if (jenkinsJobName && jenkinsJobBuild) {
+            jenkinsJobName = jenkinsJobName.replace(" ", "_")
+            projectVersion = jenkinsJobName + '_' + jenkinsJobBuild
+        }
+
+        property "sonar.host.url", "http://localhost:9000"
+        property "sonar.projectKey", projectKey // some shortcut name
+        property "sonar.projectName", projectName
+        property "sonar.projectVersion", projectVersion
+        property "sonar.branch", branch
+        property "sonar.sourceEncoding", "UTF-8"
+        property "sonar.scm.provider", "git"
+        property "sonar.java.coveragePlugin", "jacoco"
+    }
 }
