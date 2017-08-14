@@ -12,8 +12,33 @@ buildscript {
 }
 
 plugins {
-    id "org.sonarqube" version "2.2.1"
+    id "org.sonarqube" version "2.5"
+    id "java"
+    id "jacoco"
 }
+
+ext {
+    jacocoVersion = '0.7.8'
+}
+
+sonarqube{
+    properties{
+        property "sonar.jacoco.reportPaths", "${project.buildDir}/jacoco/test.exec"
+        property "sonar.java.coveragePlugin", "jacoco"
+    }
+}
+
+description = 'Example of SonarQube Scanner for Gradle Usage'
+version = '1.0'
+
+sonarqube {
+    properties {
+
+    }
+}
+
+// Apply the application plugin to add support for building an application
+apply plugin: 'application'
 
 allprojects {
     repositories {
@@ -21,37 +46,3 @@ allprojects {
     }
 }
 
-task clean(type: Delete) {
-    delete rootProject.buildDir
-}
-
-ext {
-    jacocoVersion = '0.7.8'
-}
-
-sonarqube {
-    properties {
-
-        def jenkinsJobName = System.getenv('JOB_NAME')
-        def jenkinsJobBuild = System.getenv('BUILD_NUMBER')
-
-        def projectVersion = "nonJenkinsBuild_1.0"
-        def projectName = "PhotoGallery"
-        def projectKey = "photogallery:photogallery"
-        def branch = "master"
-
-        if (jenkinsJobName && jenkinsJobBuild) {
-            jenkinsJobName = jenkinsJobName.replace(" ", "_")
-            projectVersion = jenkinsJobName + '_' + jenkinsJobBuild
-        }
-
-        property "sonar.host.url", "http://localhost:9000"
-        property "sonar.projectKey", projectKey // some shortcut name
-        property "sonar.projectName", projectName
-        property "sonar.projectVersion", projectVersion
-        property "sonar.branch", branch
-        property "sonar.sourceEncoding", "UTF-8"
-        property "sonar.scm.provider", "git"
-        property "sonar.java.coveragePlugin", "jacoco"
-    }
-}

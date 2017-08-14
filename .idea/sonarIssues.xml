@@ -8,6 +8,21 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/../BeatBox/app/build.gradle">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../BeatBox/app/src/test/java/me/ipoondev/beatbox/SoundViewModelTest.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../BeatBox/build.gradle">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/build.gradle">
           <value>
             <set />

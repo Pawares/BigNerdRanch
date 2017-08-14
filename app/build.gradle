@@ -1,6 +1,5 @@
 apply plugin: 'com.android.application'
 
-
 buildscript {
 
     repositories {
@@ -51,25 +50,10 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:26.0.0-alpha1'
 }
 
-//Version plugin task -> dependencyUpdates
-//configures Gradle Versions plugin to list only release status versions
-dependencyUpdates.resolutionStrategy = {
-    componentSelection { rules ->
-        rules.all { ComponentSelection selection ->
-            boolean rejected = ['alpha', 'beta', 'rc', 'cr', 'm'].any { qualifier ->
-                selection.candidate.version ==~ /(?i).*[.-]${qualifier}[.\d-]*/
-            }
-            if (rejected) {
-                selection.reject('Release candidate')
-            }
-        }
-    }
-}
-
 sonarqube {
     properties {
         property "sonar.jacoco.reportPaths", "build/jacoco/testDebugUnitTest.exec"
-        property "sonar.junit.reportsPath", "build/test-results/debug"
+        property "sonar.junit.reportsPaths", "build/test-results/debug"
     }
 }
 
